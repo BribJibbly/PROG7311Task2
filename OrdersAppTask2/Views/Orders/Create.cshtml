@@ -1,0 +1,41 @@
+﻿@model OrdersAppTask2.Models.Order
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+<h1>Please select the item you would like to order</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="OrderId" class="control-label" hidden></label>
+                <input asp-for="OrderId" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetInt32("Identity")" hidden/>
+                <span asp-validation-for="OrderId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label" hidden></label>
+                <input asp-for="Username" class="form-control" value="@HttpContextAccessor.HttpContext.Session.GetString("LoggedInUser")" hidden/>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <select asp-for="ProductName" class="form-control" asp-items="ViewBag.ProductName"></select>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Purchase" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

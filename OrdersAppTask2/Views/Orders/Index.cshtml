@@ -1,0 +1,48 @@
+﻿@model IEnumerable<OrdersAppTask2.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@if (@HttpContextAccessor.HttpContext.Session.GetString("LoggedStatus") == "Customer")
+{
+<h1>Orders Made By @HttpContextAccessor.HttpContext.Session.GetString("LoggedInUser")</h1>
+}
+@if (@HttpContextAccessor.HttpContext.Session.GetString("LoggedStatus") == "Employee")
+{ 
+<h1>Orders Made by Users</h1>
+}
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductNameNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsernameNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductNameNavigation.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsernameNavigation.Username)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
